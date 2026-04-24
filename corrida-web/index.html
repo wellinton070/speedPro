@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Treino para Corredores</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- TELA DE LOGIN -->
+  <div id="tela-login" class="tela ativa">
+    <div class="card centro">
+      <h1>🏃 Treino de Corrida</h1>
+      <p class="subtitulo">Seu assistente inteligente de treinos</p>
+
+      <input type="email" id="input-email" placeholder="Seu email" />
+      <input type="password" id="input-senha" placeholder="Sua senha" />
+      <button onclick="entrar()">Entrar</button>
+
+      <p class="link" onclick="mostrarTela('tela-cadastro')">Não tenho cadastro →</p>
+    </div>
+  </div>
+
+  <!-- TELA DE CADASTRO -->
+  <div id="tela-cadastro" class="tela">
+    <div class="card">
+
+      <div class="progresso-container">
+        <div class="progresso-barra">
+          <div class="progresso-fill" id="progresso-fill"></div>
+        </div>
+        <p class="progresso-texto" id="progresso-texto">Etapa 1 de 3</p>
+      </div>
+
+      <!-- ETAPA 1 -->
+      <div class="etapa" id="etapa-1">
+        <h2>Dados Pessoais</h2>
+        <p class="subtitulo">Vamos começar com suas informações básicas</p>
+        <input type="text" id="nome" placeholder="Nome completo" />
+        <input type="number" id="idade" placeholder="Idade" />
+        <input type="number" id="peso" placeholder="Peso (kg)" />
+        <input type="number" id="altura" placeholder="Altura (cm)" />
+        <button onclick="proximaEtapa(1)">Próximo →</button>
+      </div>
+
+      <!-- ETAPA 2 -->
+      <div class="etapa" id="etapa-2" style="display:none">
+        <h2>Perfil de Corrida</h2>
+        <p class="subtitulo">Conte-nos sobre seus objetivos</p>
+        <input type="text" id="objetivo" placeholder="Objetivo (ex: correr 5km)" />
+        <input type="number" id="dias" placeholder="Dias disponíveis por semana" />
+        <input type="text" id="lesoes" placeholder="Lesões ou restrições (ou 'nenhuma')" />
+        <label>Nível de experiência:</label>
+        <select id="nivel">
+          <option value="iniciante">Iniciante</option>
+          <option value="intermediário">Intermediário</option>
+          <option value="avançado">Avançado</option>
+        </select>
+        <button onclick="proximaEtapa(2)">Próximo →</button>
+        <p class="link" onclick="voltarEtapa(1)">← Voltar</p>
+      </div>
+
+      <!-- ETAPA 3 -->
+      <div class="etapa" id="etapa-3" style="display:none">
+        <h2>Criar Acesso</h2>
+        <p class="subtitulo">Defina seu email e senha para entrar</p>
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="senha" placeholder="Senha" />
+        <button onclick="cadastrar()">Finalizar Cadastro ✅</button>
+        <p class="link" onclick="voltarEtapa(2)">← Voltar</p>
+      </div>
+
+      <p class="link" onclick="mostrarTela('tela-login')" style="margin-top:8px">Já tenho cadastro</p>
+    </div>
+  </div>
+
+  <!-- TELA PRINCIPAL -->
+  <div id="tela-principal" class="tela">
+    <nav>
+      <span id="nav-nome">Olá!</span>
+      <div class="nav-botoes">
+        <button class="nav-btn ativo" onclick="mostrarAba('aba-plano', this)">🏃 Plano</button>
+        <button class="nav-btn" onclick="mostrarAba('aba-treino', this)">✅ Treino</button>
+        <button class="nav-btn" onclick="mostrarAba('aba-historico', this)">📊 Histórico</button>
+      </div>
+    </nav>
+
+    <!-- ABA PLANO -->
+    <div id="aba-plano" class="aba ativa">
+      <div class="card">
+        <h2>Plano de Treino</h2>
+        <button onclick="gerarPlano()">🏃 Gerar Novo Plano</button>
+        <button class="secundario" onclick="ajustarPlano()">🔄 Ajustar com Histórico</button>
+        <div id="resultado-plano" class="resultado"></div>
+      </div>
+    </div>
+
+    <!-- ABA TREINO -->
+    <div id="aba-treino" class="aba">
+      <div class="card">
+        <h2>Registrar Treino</h2>
+        <input type="date" id="data-treino" />
+        <input type="text" id="tipo-treino" placeholder="Tipo de treino" />
+        <input type="number" id="duracao" placeholder="Duração (minutos)" />
+        <input type="number" id="distancia" placeholder="Distância (km)" />
+        <input type="text" id="observacoes" placeholder="Observações (ou 'nenhuma')" />
+
+        <label>Nível de cansaço: <span id="valor-cansaco">5</span>/10</label>
+        <input type="range" min="1" max="10" value="5" id="cansaco" oninput="document.getElementById('valor-cansaco').textContent = this.value" />
+
+        <button onclick="salvarTreino()">✅ Salvar Treino</button>
+      </div>
+    </div>
+
+    <!-- ABA HISTÓRICO -->
+    <div id="aba-historico" class="aba">
+      <div class="card">
+        <h2>Histórico de Treinos</h2>
+        <button onclick="carregarHistorico()">🔄 Atualizar</button>
+        <div id="lista-historico"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
