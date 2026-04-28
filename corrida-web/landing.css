@@ -1,0 +1,231 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0a1628;
+  color: #fff;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.btn-nav {
+  background-color: #E06C00;
+  color: #fff !important;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.btn-nav:hover {
+  background-color: #c45e00 !important;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a1628 0%, #1A3A6B 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.hero-content h1 {
+  font-size: 56px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.destaque {
+  color: #E06C00;
+}
+
+.hero-content p {
+  font-size: 18px;
+  color: #aac4e8;
+  max-width: 560px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.hero-botoes {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-primario {
+  background-color: #E06C00;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-primario:hover {
+  background-color: #c45e00;
+}
+
+.btn-secundario {
+  background-color: transparent;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: border 0.2s;
+}
+
+.btn-secundario:hover {
+  border-color: #fff;
+}
+
+/* ── FUNCIONALIDADES ── */
+.funcionalidades {
+  background-color: #f5f7fa;
+  background-image: url('corrida.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #333;
+  padding: 80px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.funcionalidades::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(245, 247, 250, 0.75);
+}
+
+.funcionalidades h2,
+.cards {
+  position: relative;
+  z-index: 1;
+}
+
+.funcionalidades h2 {
+  font-size: 32px;
+  color: #1A3A6B;
+  margin-bottom: 48px;
+}
+
+.cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 24px;
+  width: 280px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.icone {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  color: #1A3A6B;
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ── CTA ── */
+.cta {
+  background: linear-gradient(135deg, #1A3A6B 0%, #0a1628 100%);
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.cta h2 {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.cta p {
+  font-size: 16px;
+  color: #aac4e8;
+  margin-bottom: 32px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background-color: #0a1628;
+  padding: 24px;
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+  border-top: 1px solid #1a2a3a;
+}

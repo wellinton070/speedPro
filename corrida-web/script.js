@@ -3,6 +3,12 @@ let usuarioAtual = null;
 let idPlanoAtual = null;
 let dadosCadastro = {};
 
+
+// Verifica se veio da landing page com tela específica
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('tela') === 'cadastro') {
+  mostrarTela('tela-cadastro');
+}
 // ── Navegação ──────────────────────────────────────────────────────────────
 
 function mostrarTela(id) {
