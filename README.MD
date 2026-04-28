@@ -41,7 +41,7 @@ Abra o arquivo corrida-web/index.html no navegador
 
 ## Funcionalidades
 
-- Cadastro de usuário em 3 etapas
+ -Cadastro de usuário em 3 etapas
 - Login com email e senha
 - Geração de plano de treino personalizado com IA
 - Ajuste adaptativo do plano com base no histórico
