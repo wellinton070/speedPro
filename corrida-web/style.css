@@ -73,12 +73,12 @@ body {
 
 /* TEXTOS */
 h1, h2 {
-  color: #333;
+  color: #0f0f0f;
   margin-bottom: 10px;
 }
 
 .subtitulo {
-  color: #777;
+  color: #302e2e;
   margin-bottom: 20px;
 }
 
@@ -109,7 +109,7 @@ button {
   border: none;
   border-radius: 12px;
 
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  background: linear-gradient(90deg, #0f57dd, #1020b6);
   color: white;
   font-weight: bold;
   font-size: 15px;
@@ -136,7 +136,7 @@ button:hover {
 /* LINKS */
 .link {
   margin-top: 10px;
-  color: #ff7e5f;
+  color: #2743e0;
   cursor: pointer;
   font-size: 14px;
 }
@@ -174,7 +174,7 @@ nav {
 }
 
 .nav-btn.ativo {
-  background: #ff7e5f;
+  background: #ee3232;
   color: white;
 }
 
