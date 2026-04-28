@@ -17,6 +17,51 @@ function mostrarAba(id, botao) {
   botao.classList.add('ativo');
 }
 
+// ── Validação de Email ─────────────────────────────────────────────────────
+
+function validarEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!regex.test(email)) {
+    alert('Email inválido!');
+    return false;
+  }
+
+  const dominiosPermitidos = [
+    'gmail.com',
+    'hotmail.com',
+    'outlook.com',
+    'yahoo.com'
+  ];
+
+  const dominio = email.split('@')[1];
+
+  if (!dominiosPermitidos.includes(dominio)) {
+    alert('Use um email válido (gmail, hotmail, etc)');
+    return false;
+  }
+
+  return true;
+}
+
+// ── Verificar Email na API ────────────────────────────────────────────────
+
+async function verificarEmailExiste(email) {
+  try {
+    const res = await fetch(`${API}/usuarios/verificar-email`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+    return data.existe;
+  } catch {
+    alert('Erro ao verificar email!');
+    return true;
+  }
+}
+
 // ── Login ──────────────────────────────────────────────────────────────────
 
 async function entrar() {
@@ -31,12 +76,16 @@ async function entrar() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, senha }),
     });
+
     const dados = await res.json();
+
     if (!dados.id) throw new Error();
+
     usuarioAtual = dados;
     mostrarTela('tela-principal');
     document.getElementById('nav-nome').textContent = `Olá, ${usuarioAtual.nome}!`;
-  } catch (erro) {
+
+  } catch {
     alert('Email ou senha incorretos!');
   }
 }
@@ -87,11 +136,23 @@ function voltarEtapa(etapaAtual) {
   document.getElementById('progresso-texto').textContent = `Etapa ${etapaAtual} de 3`;
 }
 
+// 🔥 CADASTRO COM VALIDAÇÃO
 async function cadastrar() {
   const email = document.getElementById('email').value;
   const senha = document.getElementById('senha').value;
 
   if (!email || !senha) return alert('Preencha email e senha!');
+
+  // validar email
+  if (!validarEmail(email)) return;
+
+  // verificar duplicado
+  const existe = await verificarEmailExiste(email);
+
+  if (existe) {
+    alert('Email já cadastrado!');
+    return;
+  }
 
   dadosCadastro.email = email;
   dadosCadastro.senha = senha;
@@ -102,10 +163,13 @@ async function cadastrar() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dadosCadastro),
     });
-    const resultado = await res.json();
+
+    if (!res.ok) throw new Error();
+
     alert('Cadastro realizado com sucesso! Faça login para continuar.');
     dadosCadastro = {};
     mostrarTela('tela-login');
+
   } catch {
     alert('Erro ao cadastrar!');
   }
@@ -178,6 +242,7 @@ async function salvarTreino() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dados),
     });
+
     alert('Treino registrado com sucesso!');
   } catch {
     alert('Erro ao salvar treino!');
@@ -203,7 +268,7 @@ async function carregarHistorico() {
       <div class="treino-card">
         <h3>${s.tipo}</h3>
         <p>📅 ${s.data}</p>
-        <p>⏱ ${s.duracao_min} min &nbsp;|&nbsp; 📍 ${s.distancia_km} km &nbsp;|&nbsp; 💪 Cansaço: ${s.nivel_cansaco}/10</p>
+        <p>⏱ ${s.duracao_min} min | 📍 ${s.distancia_km} km | 💪 Cansaço: ${s.nivel_cansaco}/10</p>
         ${s.observacoes !== 'nenhuma' ? `<p>📝 ${s.observacoes}</p>` : ''}
       </div>
     `).join('');
