@@ -1,11 +1,15 @@
 from database.conexao import conectar
-from ia.gemini import gerar_plano
+from ia.gemini import gerar_plano, ajustar_plano
 
-def criar_plano(usuario):
+# --- Adicionamos o parâmetro 'provedor' nas duas funções ---
+# Ele chega aqui vindo da rota da API e é repassado para a IA
+
+def criar_plano(usuario, provedor="groq"):
     print("\nGerando seu plano de treino personalizado...")
-    print("Aguarde, a IA está trabalhando...\n")
+    print(f"Aguarde, a IA está trabalhando... (usando: {provedor})\n")
 
-    plano = gerar_plano(usuario)
+    # Passa o provedor para a função de IA — ela decide qual usar
+    plano = gerar_plano(usuario, provedor)
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -27,10 +31,9 @@ def criar_plano(usuario):
     print(f"Plano salvo no banco com ID: {id_plano}")
 
     return id_plano
-def ajustar_plano_semanal(usuario):
-    from ia.gemini import ajustar_plano
-    from database.conexao import conectar
 
+
+def ajustar_plano_semanal(usuario, provedor="groq"):
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -56,14 +59,15 @@ def ajustar_plano_semanal(usuario):
         historico += f"Distância: {sessao[3]}km, Cansaço: {sessao[4]}/10, Obs: {sessao[5]}\n"
 
     print("\nAnalisando seu histórico e gerando plano ajustado...")
-    print("Aguarde, a IA está trabalhando...\n")
+    print(f"Aguarde, a IA está trabalhando... (usando: {provedor})\n")
 
-    plano = ajustar_plano(usuario, historico)
+    # Passa o provedor para a função de IA — ela decide qual usar
+    plano = ajustar_plano(usuario, historico, provedor)
 
     conexao = conectar()
     cursor = conexao.cursor()
 
-    semana_atual = cursor.execute("""
+    cursor.execute("""
         SELECT COUNT(*) FROM planos_treino WHERE id_usuario = %s
     """, (usuario["id"],))
     semana = cursor.fetchone()[0] + 1

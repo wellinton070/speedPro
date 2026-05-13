@@ -16,15 +16,25 @@ class FeedbackEntrada(BaseModel):
     nivel_cansaco: int
     observacoes: str
 
+# --- Modelo novo: recebe qual IA o usuário escolheu ---
+# O campo 'provedor' é opcional — se não enviar, usa "groq" por padrão
+class EscolhaIA(BaseModel):
+    provedor: str = "groq"  # valores aceitos: "groq" ou "gemini"
+
 @router.post("/plano/{id_usuario}")
-def gerar_plano(id_usuario: int):
+def gerar_plano(id_usuario: int, escolha: EscolhaIA = EscolhaIA()):
     usuario = buscar_usuario(id_usuario)
 
     if usuario is None:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
 
-    id_plano = criar_plano(usuario)
-    return {"id_plano": id_plano, "mensagem": "Plano gerado com sucesso!"}
+    # Passa o provedor escolhido para a função que gera o plano
+    id_plano = criar_plano(usuario, escolha.provedor)
+    return {
+        "id_plano": id_plano,
+        "mensagem": "Plano gerado com sucesso!",
+        "ia_utilizada": escolha.provedor  # informa qual IA foi usada
+    }
 
 @router.post("/feedback")
 def salvar_feedback(feedback: FeedbackEntrada):
@@ -78,14 +88,19 @@ def historico(id_usuario: int):
     ]
 
 @router.post("/ajustar/{id_usuario}")
-def ajustar_plano(id_usuario: int):
+def ajustar_plano(id_usuario: int, escolha: EscolhaIA = EscolhaIA()):
     usuario = buscar_usuario(id_usuario)
 
     if usuario is None:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
 
-    id_plano = ajustar_plano_semanal(usuario)
-    return {"id_plano": id_plano, "mensagem": "Plano ajustado com sucesso!"}
+    # Passa o provedor escolhido para a função que ajusta o plano
+    id_plano = ajustar_plano_semanal(usuario, escolha.provedor)
+    return {
+        "id_plano": id_plano,
+        "mensagem": "Plano ajustado com sucesso!",
+        "ia_utilizada": escolha.provedor
+    }
 
 @router.get("/plano-conteudo/{id_plano}")
 def buscar_conteudo_plano(id_plano: int):

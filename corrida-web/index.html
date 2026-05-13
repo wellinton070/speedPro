@@ -4,128 +4,236 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sistema de Treino para Corredores</title>
+  <title>SpeedPro — Treino Inteligente</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
 </head>
 
-<body class="bg-corrida">
-  
-  <!-- TELA DE LOGIN -->
+<body>
+  <img class="bg-img" src="corrida.jpg" alt="" />
+
+  <!-- ── TELA DE LOGIN ── -->
   <div id="tela-login" class="tela ativa">
-    <div class="card centro">
-      <h1>🏃 Treino de Corrida</h1>
-      <p class="subtitulo">Seu assistente inteligente de treinos</p>
-
-      <input type="email" id="input-email" placeholder="Seu email" />
-      <input type="password" id="input-senha" placeholder="Sua senha" />
-      <button onclick="entrar()">Entrar</button>
-
-      <p class="link" onclick="mostrarTela('tela-cadastro')">Não tenho cadastro →</p>
+    <div class="auth-container">
+      <div class="auth-brand">
+        <h1>SpeedPro</h1>
+        <p>Seu assistente inteligente de corrida</p>
+      </div>
+      <div class="auth-card">
+        <h2>Entrar na conta</h2>
+        <p class="subtitulo">Bem-vindo de volta</p>
+        <label>Email</label>
+        <input type="email" id="input-email" placeholder="seu@email.com" />
+        <label>Senha</label>
+        <input type="password" id="input-senha" placeholder="••••••••" />
+        <button onclick="entrar()">Entrar</button>
+        <p class="link" onclick="mostrarTela('tela-cadastro')">Nao tenho cadastro</p>
+      </div>
     </div>
   </div>
 
-  <!-- TELA DE CADASTRO -->
+  <!-- ── TELA DE CADASTRO ── -->
   <div id="tela-cadastro" class="tela">
-    <div class="card">
-
-      <div class="progresso-container">
-        <div class="progresso-barra">
-          <div class="progresso-fill" id="progresso-fill"></div>
+    <div class="auth-container">
+      <div class="auth-brand">
+        <h1>SpeedPro</h1>
+        <p>Crie sua conta e comece a treinar</p>
+      </div>
+      <div class="auth-card">
+        <div class="progresso-container">
+          <div class="progresso-barra">
+            <div class="progresso-fill" id="progresso-fill"></div>
+          </div>
+          <p class="progresso-texto" id="progresso-texto">Etapa 1 de 3</p>
         </div>
-        <p class="progresso-texto" id="progresso-texto">Etapa 1 de 3</p>
-      </div>
 
-      <!-- ETAPA 1 -->
-      <div class="etapa" id="etapa-1">
-        <h2>Dados Pessoais</h2>
-        <p class="subtitulo">Vamos começar com suas informações básicas</p>
-        <input type="text" id="nome" placeholder="Nome completo" />
-        <input type="number" id="idade" placeholder="Idade" />
-        <input type="number" id="peso" placeholder="Peso (kg)" />
-        <input type="number" id="altura" placeholder="Altura (cm)" />
-        <button onclick="proximaEtapa(1)">Próximo →</button>
-      </div>
+        <div id="etapa-1">
+          <h2>Dados Pessoais</h2>
+          <p class="subtitulo">Suas informacoes basicas</p>
+          <label>Nome completo</label>
+          <input type="text" id="nome" placeholder="Como voce se chama" />
+          <label>Idade</label>
+          <input type="number" id="idade" placeholder="Anos" />
+          <label>Peso (kg)</label>
+          <input type="number" id="peso" placeholder="Ex: 70" />
+          <label>Altura (cm)</label>
+          <input type="number" id="altura" placeholder="Ex: 175" />
+          <button onclick="proximaEtapa(1)">Proximo</button>
+          <p class="link" onclick="mostrarTela('tela-login')">Ja tenho cadastro</p>
+        </div>
 
-      <!-- ETAPA 2 -->
-      <div class="etapa" id="etapa-2" style="display:none">
-        <h2>Perfil de Corrida</h2>
-        <p class="subtitulo">Conte-nos sobre seus objetivos</p>
-        <input type="text" id="objetivo" placeholder="Objetivo (ex: correr 5km)" />
-        <input type="number" id="dias" placeholder="Dias disponíveis por semana" />
-        <input type="text" id="lesoes" placeholder="Lesões ou restrições (ou 'nenhuma')" />
-        <label>Nível de experiência:</label>
-        <select id="nivel">
-          <option value="iniciante">Iniciante</option>
-          <option value="intermediário">Intermediário</option>
-          <option value="avançado">Avançado</option>
-        </select>
-        <button onclick="proximaEtapa(2)">Próximo →</button>
-        <p class="link" onclick="voltarEtapa(1)">← Voltar</p>
-      </div>
+        <div id="etapa-2" style="display:none">
+          <h2>Perfil de Corrida</h2>
+          <p class="subtitulo">Seus objetivos e disponibilidade</p>
+          <label>Objetivo</label>
+          <input type="text" id="objetivo" placeholder="Ex: correr 5km sem parar" />
+          <label>Dias disponiveis por semana</label>
+          <input type="number" id="dias" placeholder="Ex: 3" />
+          <label>Lesoes ou restricoes</label>
+          <input type="text" id="lesoes" placeholder="Ex: joelho ou 'nenhuma'" />
+          <label>Nivel de experiencia</label>
+          <select id="nivel">
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediario</option>
+            <option value="avancado">Avancado</option>
+          </select>
+          <button onclick="proximaEtapa(2)">Proximo</button>
+          <p class="link" onclick="voltarEtapa(1)">Voltar</p>
+        </div>
 
-      <!-- ETAPA 3 -->
-      <div class="etapa" id="etapa-3" style="display:none">
-        <h2>Criar Acesso</h2>
-        <p class="subtitulo">Defina seu email e senha para entrar</p>
-        <input type="email" id="email" placeholder="Email" />
-        <input type="password" id="senha" placeholder="Senha" />
-        <button onclick="cadastrar()">Finalizar Cadastro ✅</button>
-        <p class="link" onclick="voltarEtapa(2)">← Voltar</p>
+        <div id="etapa-3" style="display:none">
+          <h2>Criar Acesso</h2>
+          <p class="subtitulo">Email e senha para entrar</p>
+          <label>Email</label>
+          <input type="email" id="email" placeholder="seu@email.com" />
+          <label>Senha</label>
+          <input type="password" id="senha" placeholder="Minimo 6 caracteres" />
+          <button onclick="cadastrar()">Finalizar Cadastro</button>
+          <p class="link" onclick="voltarEtapa(2)">Voltar</p>
+        </div>
       </div>
-
-      <p class="link" onclick="mostrarTela('tela-login')" style="margin-top:8px">Já tenho cadastro</p>
     </div>
   </div>
 
-  <!-- TELA PRINCIPAL -->
+  <!-- ── TELA PRINCIPAL ── -->
   <div id="tela-principal" class="tela">
-    <nav>
-      <span id="nav-nome">Olá!</span>
-      <div class="nav-botoes">
-        <button class="nav-btn ativo" onclick="mostrarAba('aba-plano', this)">🏃 Plano</button>
-        <button class="nav-btn" onclick="mostrarAba('aba-treino', this)">✅ Treino</button>
-        <button class="nav-btn" onclick="mostrarAba('aba-historico', this)">📊 Histórico</button>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">SpeedPro</div>
+
+      <nav class="sidebar-nav">
+        <button class="sidebar-btn ativo" onclick="trocarAba('aba-plano', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Plano de Treino
+        </button>
+        <button class="sidebar-btn" onclick="trocarAba('aba-treino', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          Registrar Treino
+        </button>
+        <button class="sidebar-btn" onclick="trocarAba('aba-historico', this); carregarHistorico()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18" />
+            <path d="M18 9l-5 5-4-4-3 3" />
+          </svg>
+          Historico
+        </button>
+        <button class="sidebar-btn" onclick="trocarAba('aba-perfil', this); carregarPerfil()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          Meu Perfil
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebar-inicial">W</div>
+          <span id="nav-nome">Usuario</span>
+        </div>
+        <button class="sidebar-sair" onclick="mostrarTela('tela-login')">Sair</button>
       </div>
-    </nav>
+    </aside>
 
-    <!-- ABA PLANO -->
-    <div id="aba-plano" class="aba ativa">
-      <div class="card">
-        <h2>Plano de Treino</h2>
-        <button onclick="gerarPlano()">🏃 Gerar Novo Plano</button>
-        <button class="secundario" onclick="ajustarPlano()">🔄 Ajustar com Histórico</button>
-        <div id="resultado-plano" class="resultado"></div>
+    <!-- CONTEUDO PRINCIPAL -->
+    <main class="main-content">
+
+      <!-- ABA PLANO -->
+      <div id="aba-plano" class="aba ativa">
+        <div class="page-header">
+          <h1>Plano de Treino</h1>
+          <p>Gere ou ajuste seu plano personalizado com inteligencia artificial</p>
+        </div>
+        <div class="page-grid">
+          <div class="content-card">
+            <h3>Configurar Plano</h3>
+            <label>Motor de IA</label>
+            <select id="seletor-ia">
+              <option value="groq">Groq Direto — LLaMA 3.3</option>
+              <option value="gemini">LangChain + Groq — Framework</option>
+            </select>
+            <button onclick="gerarPlano()">Gerar Novo Plano</button>
+            <button class="secundario" onclick="ajustarPlano()">Ajustar com Historico</button>
+          </div>
+          <div class="content-card resultado-card">
+            <h3>Seu Plano</h3>
+            <div id="resultado-plano" class="resultado">
+              <p class="placeholder-text">Seu plano aparecera aqui apos a geracao.</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- ABA TREINO -->
-    <div id="aba-treino" class="aba">
-      <div class="card">
-        <h2>Registrar Treino</h2>
-        <input type="date" id="data-treino" />
-        <input type="text" id="tipo-treino" placeholder="Tipo de treino" />
-        <input type="number" id="duracao" placeholder="Duração (minutos)" />
-        <input type="number" id="distancia" placeholder="Distância (km)" />
-        <input type="text" id="observacoes" placeholder="Observações (ou 'nenhuma')" />
-
-        <label>Nível de cansaço: <span id="valor-cansaco">5</span>/10</label>
-        <input type="range" min="1" max="10" value="5" id="cansaco" oninput="document.getElementById('valor-cansaco').textContent = this.value" />
-
-        <button onclick="salvarTreino()">✅ Salvar Treino</button>
+      <!-- ABA TREINO -->
+      <div id="aba-treino" class="aba">
+        <div class="page-header">
+          <h1>Registrar Treino</h1>
+          <p>Registre sua sessao de treino de hoje</p>
+        </div>
+        <div class="page-grid">
+          <div class="content-card">
+            <h3>Dados do Treino</h3>
+            <label>Data do treino</label>
+            <input type="date" id="data-treino" />
+            <label>Tipo de treino</label>
+            <input type="text" id="tipo-treino" placeholder="Ex: corrida leve, intervalado..." />
+            <label>Duracao (minutos)</label>
+            <input type="number" id="duracao" placeholder="Ex: 30" />
+            <label>Distancia (km)</label>
+            <input type="number" id="distancia" placeholder="Ex: 5" />
+            <label>Observacoes</label>
+            <input type="text" id="observacoes" placeholder="Como foi o treino?" />
+            <label>Nivel de cansaco: <span id="valor-cansaco">5</span>/10</label>
+            <input type="range" min="1" max="10" value="5" id="cansaco" oninput="document.getElementById('valor-cansaco').textContent = this.value" />
+            <button onclick="salvarTreino()">Salvar Treino</button>
+          </div>
+          <div class="content-card info-card">
+            <h3>Dica do Dia</h3>
+            <p>Registrar seus treinos e fundamental para acompanhar sua evolucao. Inclua observacoes honestas sobre como se sentiu — isso ajuda a IA a ajustar seu plano.</p>
+            <div class="info-stat">
+              <span>Gere seu plano primeiro para obter o ID do plano ativo.</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- ABA HISTÓRICO -->
-    <div id="aba-historico" class="aba">
-      <div class="card">
-        <h2>Histórico de Treinos</h2>
-        <button onclick="carregarHistorico()">🔄 Atualizar</button>
-        <div id="lista-historico"></div>
+      <!-- ABA HISTORICO -->
+      <div id="aba-historico" class="aba">
+        <div class="page-header">
+          <h1>Historico de Treinos</h1>
+          <p>Acompanhe sua evolucao ao longo do tempo</p>
+        </div>
+        <div class="content-card full-card">
+          <div class="card-header-row">
+            <h3>Ultimas sessoes</h3>
+            <button class="btn-small" onclick="carregarHistorico()">Atualizar</button>
+          </div>
+          <div id="lista-historico">
+            <p class="placeholder-text">Carregue seu historico clicando em Atualizar.</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
-
-</html>
+      <!-- ABA PERFIL -->
+      <div id="aba-perfil" class="aba">
+        <div class="page-header">
+          <h1>Meu Perfil</h1>
+          <p>Mantenha seus dados atualizados para planos mais precisos</p>
+        </div>
+        <div class="page-grid">
+          <div class="content-card">
+            <h3>Dados Pessoais</h3>
+            <label>Nome</label>
+            <input type="text" id="perfil-nome" placeholder="Seu nome" />
+            <label>Idade</label>
+            <input type="number" id="perfil-idade" placeholder="Anos" />
+            <label>Peso (kg)</label>
+            <input type="number" id="perfil-peso" placeholder="Ex: 70" />
+            <label>Altura (cm)</label>
+            <input type="number" id="perfil-altura
