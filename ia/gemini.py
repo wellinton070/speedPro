@@ -1,9 +1,9 @@
-# ============================================================
+
 # ia/gemini.py — Módulo de Inteligência Artificial
 # Suporta dois provedores de IA:
 #   1. Groq direto (implementação original)
 #   2. LangChain + Groq (nova implementação com framework LangChain)
-# ============================================================
+
 
 from groq import Groq
 import os
@@ -16,16 +16,14 @@ from langchain_core.prompts import ChatPromptTemplate        # Template de promp
 
 load_dotenv()
 
-# ============================================================
 # CLIENTE GROQ DIRETO (implementação original — sem alterações)
-# ============================================================
+
 cliente_groq = Groq(api_key=os.getenv("API_KEY_GROQ"))
 
-# ============================================================
 # CLIENTE LANGCHAIN + GROQ (nova implementação com framework)
 # ChatGroq é a classe do LangChain que conecta ao Groq
 # temperature=0.7 controla a criatividade (0=preciso, 1=criativo)
-# ============================================================
+
 cliente_langchain = ChatGroq(
     model="llama-3.3-70b-versatile",
     api_key=os.getenv("API_KEY_GROQ"),
@@ -51,7 +49,7 @@ def gerar_plano(usuario, provedor="groq"):
     """
 
     if provedor == "gemini":
-        # --- IMPLEMENTAÇÃO LANGCHAIN ---
+        #  IMPLEMENTAÇÃO LANGCHAIN 
         # ChatPromptTemplate cria um template reutilizável de prompt
         prompt_template = ChatPromptTemplate.from_messages([
             ("system", "Você é um personal trainer especializado em corrida para iniciantes."),
@@ -68,7 +66,7 @@ def gerar_plano(usuario, provedor="groq"):
         return resposta.content
 
     else:
-        # --- IMPLEMENTAÇÃO GROQ DIRETA (original) ---
+        #  IMPLEMENTAÇÃO GROQ DIRETA (original) 
         resposta = cliente_groq.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": texto_prompt}]
